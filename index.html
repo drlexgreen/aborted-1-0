@@ -233,7 +233,7 @@
         <div class="eyebrow">Your taste. Your risk.</div>
         <h1>LISTEN.<br>JUDGE.<br><span>ABORTED.</span></h1>
         <p class="intro">
-          Музыка ноунеймов или нет?. Оценки без предубеждений.
+          Музыка ноунеймов или нет? Оценки без предубеждений.
           Только ты, твои друзья и треки, которым предстоит
           доказать, что они достойны быть услышаны.
         </p>
@@ -257,17 +257,76 @@
     </footer>
   </div>
 
-  <script>
-    const tg = window.Telegram.WebApp;
-tg.ready();
-tg.expand();
-    document.getElementById("create").addEventListener("click", () => {
-      alert("Скоро здесь будет создание игровой комнаты!");
-    });
+  
+<script>
+  const tg = window.Telegram?.WebApp;
 
-    document.getElementById("join").addEventListener("click", () => {
-      alert("Скоро здесь будет вход по коду комнаты!");
-    });
-  </script>
+  if (tg) {
+    tg.ready();
+    tg.expand();
+  }
+
+  document.getElementById("create").addEventListener("click", async () => {
+    const playerName = prompt("Как тебя зовут в игре?");
+
+    if (!playerName || !playerName.trim()) return;
+
+    try {
+      const response = await fetch("/rooms", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ player_name: playerName.trim() })
+      });
+
+      const room = await response.json();
+
+      if (!response.ok) {
+        throw new Error(room.detail || "Не удалось создать комнату");
+      }
+
+      alert(
+        "Комната создана!\n\n" +
+        "Код приглашения: " + room.room_code + "\n" +
+        "Игроков: " + room.players.length + " из " + room.max_players
+      );
+    } catch (error) {
+      alert("Ошибка: " + error.message);
+    }
+  });
+
+  document.getElementById("join").addEventListener("click", async () => {
+    const roomCode = prompt("Введи код комнаты");
+    if (!roomCode || !roomCode.trim()) return;
+
+    const playerName = prompt("Как тебя зовут в игре?");
+    if (!playerName || !playerName.trim()) return;
+
+    try {
+      const response = await fetch(
+        "/rooms/" + encodeURIComponent(roomCode.trim()) + "/join",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ player_name: playerName.trim() })
+        }
+      );
+
+      const room = await response.json();
+
+      if (!response.ok) {
+        throw new Error(room.detail || "Не удалось войти в комнату");
+      }
+
+      alert(
+        "Ты присоединился к игре!\n\n" +
+        "Код: " + room.room_code + "\n" +
+        "Игроков: " + room.players.length + " из " + room.max_players
+      );
+    } catch (error) {
+      alert("Ошибка: " + error.message);
+    }
+  });
+</script>
+
 </body>
 </html>
