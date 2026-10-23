@@ -13,26 +13,54 @@
     :root {
       color-scheme: dark;
       --bg: #09080d;
-      --panel: #13111b;
+      --panel: #15111e;
       --purple: #a855f7;
       --acid: #c8ff43;
-      --muted: #918a9e;
+      --muted: #a39aaf;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
-      background:
-        radial-gradient(ellipse at 50% 0%, #30134c 0%, transparent 48%),
-        var(--bg);
       color: #f8f5ff;
+      background:
+        radial-gradient(ellipse at 50% 0%, #35134e 0%, transparent 55%),
+        var(--bg);
       font-family: Inter, "Segoe UI", Arial, sans-serif;
     }
 
+    button, input { font: inherit; }
+
+    button {
+      min-height: 46px;
+      padding: 0 18px;
+      border: 1px solid #ffffff25;
+      border-radius: 10px;
+      background: #ffffff09;
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    button:hover {
+      border-color: var(--purple);
+      transform: translateY(-1px);
+    }
+
+    button:disabled { opacity: .5; cursor: wait; }
+
+    .primary {
+      color: #11100b;
+      background: var(--acid);
+      border-color: var(--acid);
+    }
+
     .app {
-      width: min(100% - 36px, 1080px);
-      margin: auto;
+      width: min(100% - 32px, 1240px);
       min-height: 100vh;
+      margin: auto;
       display: flex;
       flex-direction: column;
     }
@@ -41,13 +69,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 28px 0;
-      border-bottom: 1px solid #ffffff12;
+      gap: 16px;
+      padding: 22px 0;
+      border-bottom: 1px solid #ffffff14;
     }
 
     .logo {
       font-size: 19px;
-      font-weight: 900;
+      font-weight: 950;
       letter-spacing: 3px;
     }
 
@@ -55,16 +84,20 @@
 
     .version {
       color: var(--muted);
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 2px;
     }
 
-    main {
-      flex: 1;
+    .screen { flex: 1; }
+    .hidden { display: none !important; }
+
+    /* ГЛАВНЫЙ ЭКРАН */
+
+    .welcome {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1fr 1fr;
       align-items: center;
-      gap: 48px;
+      gap: 42px;
       padding: 64px 0;
     }
 
@@ -73,151 +106,426 @@
       font-size: 11px;
       font-weight: 800;
       letter-spacing: 4px;
-      text-transform: uppercase;
     }
 
     h1 {
       margin: 22px 0;
-      font-size: clamp(52px, 8vw, 100px);
-      line-height: 0.88;
-      letter-spacing: -6px;
-      font-weight: 950;
+      font-size: clamp(48px, 8vw, 94px);
+      line-height: .9;
+      letter-spacing: -5px;
     }
 
-    h1 span {
-      color: var(--purple);
-      text-shadow: 0 0 35px #a855f755;
-    }
+    h1 span { color: var(--purple); }
 
     .intro {
-      max-width: 420px;
-      color: #b6afc1;
-      font-size: 16px;
-      line-height: 1.7;
+      max-width: 440px;
+      color: #bcb3c9;
+      font-size: 15px;
+      line-height: 1.8;
     }
 
     .actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 32px;
+      margin-top: 28px;
     }
 
-    button {
-      min-height: 52px;
-      padding: 0 22px;
-      border: 1px solid #ffffff20;
-      border-radius: 10px;
-      background: #ffffff08;
-      color: white;
-      font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: transform .2s, border-color .2s;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      border-color: var(--purple);
-    }
-
-    .primary {
-      color: #11100b;
-      background: var(--acid);
-      border-color: var(--acid);
-    }
-
-    .primary:hover { border-color: white; }
-
-    .visual {
-      position: relative;
-      min-height: 370px;
+    .hero-art {
+      min-height: 350px;
       display: grid;
       place-items: center;
+      position: relative;
       overflow: hidden;
-      border: 1px solid #a855f733;
+      border: 1px solid #a855f744;
       border-radius: 24px;
-      background:
-        radial-gradient(circle at center, #7124a833, transparent 55%),
-        linear-gradient(145deg, #191321, #0e0c14);
+      background: radial-gradient(circle, #67269b55, #15101f 68%);
     }
 
-    .visual::before, .visual::after {
+    .hero-art::before,
+    .hero-art::after {
       content: "";
       position: absolute;
-      width: 250px;
-      height: 250px;
-      border: 1px solid #a855f744;
+      width: 280px;
+      height: 280px;
+      border: 1px solid #a855f755;
       border-radius: 50%;
-      transform: rotate(-25deg) scaleY(.45);
+      transform: scaleY(.42);
     }
 
-    .visual::after {
-      width: 320px;
-      height: 320px;
-      border-color: #c8ff4325;
-      transform: rotate(35deg) scaleY(.45);
+    .hero-art::after {
+      width: 360px;
+      height: 360px;
+      border-color: #c8ff4330;
     }
 
-    .symbol {
+    .hero-symbol {
       z-index: 1;
-      font-size: clamp(90px, 15vw, 150px);
-      font-weight: 950;
       color: var(--acid);
-      text-shadow: 0 0 20px #c8ff4355, 0 0 75px #a855f766;
+      font-size: 130px;
+      font-weight: 950;
+      text-shadow: 0 0 50px #a855f799;
     }
 
-    .visual-label {
-      position: absolute;
-      bottom: 22px;
-      left: 22px;
-      color: #bcb1cc;
-      font-size: 10px;
+    /* КОМНАТА */
+
+    .room-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding: 24px 0 16px;
+    }
+
+    .room-heading h2 {
+      margin: 0 0 7px;
+      font-size: clamp(23px, 4vw, 34px);
+      letter-spacing: -1px;
+    }
+
+    .subtext {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .room-code {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border: 1px solid #a855f744;
+      border-radius: 12px;
+      background: #160f22;
+    }
+
+    .room-code strong {
+      color: var(--acid);
+      font-size: 21px;
       letter-spacing: 3px;
     }
 
-    .status {
-      position: absolute;
-      top: 22px;
-      right: 22px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--acid);
-      font-size: 10px;
-      letter-spacing: 2px;
+    .room-code button { min-height: 36px; padding: 0 10px; }
+
+    .den {
+      position: relative;
+      isolation: isolate;
+      min-height: 600px;
+      overflow: hidden;
+      border: 1px solid #a855f733;
+      border-radius: 22px;
+      background:
+        radial-gradient(ellipse at 50% 50%, #53207166, transparent 45%),
+        radial-gradient(ellipse at 50% 100%, #292039, transparent 62%),
+        linear-gradient(145deg, #21182a, #100d17 60%, #1d1525);
+      box-shadow: inset 0 0 90px #00000088, 0 15px 60px #00000055;
     }
 
-    .dot {
-      width: 7px;
-      height: 7px;
+    /* Полки и лампы на заднем плане */
+
+    .shelf {
+      position: absolute;
+      top: 7%;
+      width: 17%;
+      height: 30%;
+      border: 2px solid #493450;
+      border-top: 5px solid #6b4a70;
+      border-bottom: 5px solid #6b4a70;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0 31%,
+        #694a72 32% 34%
+      );
+      opacity: .8;
+    }
+
+    .shelf.left { left: 3%; }
+    .shelf.right { right: 3%; }
+
+    .lamp {
+      position: absolute;
+      top: 7%;
+      left: 50%;
+      width: 130px;
+      height: 3px;
+      transform: translateX(-50%);
+      background: var(--purple);
+      box-shadow: 0 0 25px var(--purple), 0 0 65px #a855f755;
+    }
+
+    .lamp::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -40px;
+      width: 210px;
+      height: 190px;
+      background: linear-gradient(#a855f722, transparent);
+      clip-path: polygon(35% 0, 65% 0, 100% 100%, 0 100%);
+    }
+
+    .room-sign {
+      position: absolute;
+      top: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #eee4ff;
+      font-size: clamp(14px, 2vw, 22px);
+      font-weight: 950;
+      letter-spacing: 5px;
+      text-shadow: 0 0 20px #a855f7aa;
+      white-space: nowrap;
+    }
+
+    .room-sign span { color: var(--acid); }
+
+    .floor {
+      position: absolute;
+      left: -10%;
+      right: -10%;
+      bottom: -27%;
+      height: 62%;
+      border: 1px solid #a855f733;
       border-radius: 50%;
-      background: var(--acid);
-      box-shadow: 0 0 12px var(--acid);
+      background: repeating-radial-gradient(
+        ellipse at center,
+        #ffffff04 0 2px,
+        transparent 3px 35px
+      );
+      box-shadow: 0 -10px 80px #a855f711;
+    }
+
+    /* Стол и его поверхность */
+
+    .table {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      top: 58%;
+      width: min(65%, 570px);
+      aspect-ratio: 1.75;
+      transform: translate(-50%, -50%);
+      border: 3px solid #684578;
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse at 50% 35%, #382344, #19131f 70%);
+      box-shadow:
+        0 15px 0 #25172e,
+        0 22px 0 #100c15,
+        0 28px 45px #000000aa,
+        0 0 30px #a855f722,
+        inset 0 0 0 7px #ffffff05;
+    }
+
+    .table::before {
+      content: "";
+      position: absolute;
+      inset: 8%;
+      border: 1px solid #a855f744;
+      border-radius: 50%;
+    }
+
+    .table-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 38%;
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      display: grid;
+      place-items: center;
+      border: 2px solid #a855f7aa;
+      border-radius: 50%;
+      background: radial-gradient(circle, #542174, #170f20 72%);
+      box-shadow: 0 0 24px #a855f766, inset 0 0 25px #a855f744;
+    }
+
+    .wave {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      width: 85%;
+      height: 55%;
+    }
+
+    .wave i {
+      display: block;
+      width: 4%;
+      height: var(--h);
+      min-height: 5px;
+      border-radius: 5px;
+      background: var(--purple);
+      box-shadow: 0 0 9px #a855f788;
+      animation: pulse 1s ease-in-out infinite alternate;
+      animation-delay: var(--d);
+    }
+
+    .wave i:nth-child(3n) { background: var(--acid); }
+
+    @keyframes pulse {
+      from { transform: scaleY(.55); opacity: .65; }
+      to { transform: scaleY(1); opacity: 1; }
+    }
+
+    .track-label {
+      position: absolute;
+      top: 76%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #c8b9d8;
+      font-size: 9px;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    /* Стулья вокруг стола */
+
+    .chairs {
+      position: absolute;
+      z-index: 3;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .chair {
+      position: absolute;
+      width: 104px;
+      min-height: 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 9px 5px;
+      border: 1px solid #a855f766;
+      border-radius: 13px;
+      background: linear-gradient(145deg, #30213e, #15111d);
+      box-shadow: 0 5px 0 #0b0910, 0 0 18px #a855f71c;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .chair .avatar {
+      width: 27px;
+      height: 27px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #c8ff4388;
+      border-radius: 50%;
+      color: var(--acid);
+      background: #c8ff4310;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .chair .player-name {
+      max-width: 95px;
+      overflow: hidden;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .chair .player-role {
+      color: var(--acid);
+      font-size: 8px;
+      letter-spacing: 1px;
+    }
+
+    .chair.empty {
+      border-style: dashed;
+      border-color: #ffffff30;
+      background: #100d1766;
+      box-shadow: none;
+    }
+
+    .chair.empty .avatar {
+      border-color: #ffffff30;
+      color: #a39aaf;
+    }
+
+    .chair.empty .player-name { color: #a39aaf; }
+
+    /* Шесть мест вокруг круглого стола */
+
+    .chair.p1 { left: 50%; top: 27%; transform: translate(-50%, -50%); }
+    .chair.p2 { left: 76%; top: 39%; transform: translate(-50%, -50%); }
+    .chair.p3 { left: 76%; top: 75%; transform: translate(-50%, -50%); }
+    .chair.p4 { left: 50%; top: 84%; transform: translate(-50%, -50%); }
+    .chair.p5 { left: 24%; top: 75%; transform: translate(-50%, -50%); }
+    .chair.p6 { left: 24%; top: 39%; transform: translate(-50%, -50%); }
+
+    .room-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 18px 0 28px;
+    }
+
+    .player-count {
+      color: #d5c9e1;
+      font-size: 13px;
+    }
+
+    .player-count strong { color: var(--acid); }
+
+    .notice {
+      min-height: 20px;
+      margin-top: 12px;
+      color: #ff8caa;
+      font-size: 13px;
     }
 
     footer {
       display: flex;
       justify-content: space-between;
-      gap: 16px;
-      padding: 20px 0;
-      border-top: 1px solid #ffffff12;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 18px 0;
+      border-top: 1px solid #ffffff14;
       color: var(--muted);
       font-size: 10px;
       letter-spacing: 1px;
     }
 
     @media (max-width: 700px) {
-      .app { width: min(100% - 28px, 500px); }
-      header { padding: 20px 0; }
-      main {
-        grid-template-columns: 1fr;
-        gap: 32px;
-        padding: 48px 0;
-      }
+      .app { width: calc(100% - 24px); }
+      header { padding: 17px 0; }
+      .version { font-size: 8px; letter-spacing: 1px; }
+      .welcome { grid-template-columns: 1fr; gap: 24px; padding: 38px 0; }
       h1 { letter-spacing: -3px; }
-      .visual { min-height: 260px; }
-      footer { flex-wrap: wrap; }
+      .hero-art { min-height: 230px; }
+      .room-heading { align-items: flex-start; }
+      .den { min-height: 470px; }
+      .shelf { top: 8%; height: 22%; width: 14%; }
+      .room-sign { top: 10%; letter-spacing: 3px; }
+      .table { top: 56%; width: 78%; }
+      .chair { width: 77px; min-height: 62px; padding: 6px 3px; gap: 3px; }
+      .chair .avatar { width: 22px; height: 22px; font-size: 11px; }
+      .chair .player-name { max-width: 70px; font-size: 9px; }
+      .chair .player-role { font-size: 7px; }
+      .chair.p1 { top: 28%; }
+      .chair.p2 { left: 80%; top: 40%; }
+      .chair.p3 { left: 80%; top: 72%; }
+      .chair.p4 { top: 83%; }
+      .chair.p5 { left: 20%; top: 72%; }
+      .chair.p6 { left: 20%; top: 40%; }
+      .track-label { font-size: 7px; letter-spacing: 1px; }
+      .room-bottom { padding-bottom: 20px; }
+      .room-bottom button { width: 100%; }
+      footer { font-size: 9px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
     }
   </style>
 </head>
@@ -228,105 +536,293 @@
       <div class="version">MUSIC GAME / 1.0</div>
     </header>
 
-    <main>
+    <main id="welcomeScreen" class="screen welcome">
       <section>
-        <div class="eyebrow">Your taste. Your risk.</div>
-        <h1>LISTEN.<br>JUDGE.<br><span>ABORTED.</span></h1>
+        <div class="eyebrow">YOUR TASTE. YOUR RISK.</div>
+        <h1>LISTEN.<br>JUDGE.<br><span>SURVIVE.</span></h1>
         <p class="intro">
-          Музыка ноунеймов или нет? Оценки без предубеждений.
-          Только ты, твои друзья и треки, которым предстоит
-          доказать, что они достойны быть услышаны.
+          Музыка без имён и предубеждений. Только ты, твои друзья
+          и треки, которым предстоит доказать, что они достойны
+          быть услышанными.
         </p>
         <div class="actions">
           <button class="primary" id="create">СОЗДАТЬ ИГРУ ↗</button>
           <button id="join">ВОЙТИ ПО КОДУ</button>
         </div>
+        <div id="welcomeNotice" class="notice" role="status"></div>
       </section>
 
-      <section class="visual" aria-label="ABORTED visual">
-        <div class="status"><span class="dot"></span> SYSTEM READY</div>
-        <div class="symbol">A<span style="color:#a855f7">/</span></div>
-        <div class="visual-label">NO NAMES. JUST MUSIC.</div>
+      <section class="hero-art" aria-label="ABORTED">
+        <div class="hero-symbol">A<span style="color:#a855f7">/</span></div>
       </section>
+    </main>
+
+    <main id="roomScreen" class="screen hidden">
+      <div class="room-heading">
+        <div>
+          <h2>Твоя музыкальная берлога</h2>
+          <div class="subtext">Собирай друзей. Готовь треки. Доверяй своему слуху.</div>
+        </div>
+        <div class="room-code">
+          <div>
+            <div class="subtext">КОД КОМНАТЫ</div>
+            <strong id="roomCode">------</strong>
+          </div>
+          <button id="copyCode" title="Скопировать код">КОПИРОВАТЬ</button>
+        </div>
+      </div>
+
+      <section class="den" aria-label="Музыкальная комната">
+        <div class="shelf left"></div>
+        <div class="shelf right"></div>
+        <div class="lamp"></div>
+        <div class="room-sign">ABORTED<span>.</span> MUSIC CLUB</div>
+        <div class="floor"></div>
+
+        <div class="table">
+          <div class="table-core">
+            <div class="wave" aria-label="Аудиоволна">
+              <i style="--h:18%;--d:-.1s"></i>
+              <i style="--h:36%;--d:-.4s"></i>
+              <i style="--h:53%;--d:-.2s"></i>
+              <i style="--h:27%;--d:-.7s"></i>
+              <i style="--h:72%;--d:-.3s"></i>
+              <i style="--h:42%;--d:-.6s"></i>
+              <i style="--h:88%;--d:-.2s"></i>
+              <i style="--h:57%;--d:-.5s"></i>
+              <i style="--h:34%;--d:-.1s"></i>
+              <i style="--h:66%;--d:-.6s"></i>
+              <i style="--h:95%;--d:-.3s"></i>
+              <i style="--h:46%;--d:-.7s"></i>
+              <i style="--h:75%;--d:-.2s"></i>
+              <i style="--h:32%;--d:-.4s"></i>
+              <i style="--h:58%;--d:-.1s"></i>
+              <i style="--h:24%;--d:-.6s"></i>
+              <i style="--h:44%;--d:-.3s"></i>
+            </div>
+          </div>
+          <div class="track-label">NO NAMES. JUST MUSIC.</div>
+        </div>
+
+        <div id="chairs" class="chairs"></div>
+      </section>
+
+      <div class="room-bottom">
+        <div class="player-count" id="playerCount">Игроков: <strong>1 / 6</strong></div>
+        <button id="refreshRoom">ОБНОВИТЬ СПИСОК</button>
+        <button class="primary" id="startGame" disabled>НАЧАТЬ ИГРУ</button>
+      </div>
+      <div id="roomNotice" class="notice" role="status"></div>
     </main>
 
     <footer>
       <span>ABORTED 1.0 © 2026</span>
       <span>2–6 PLAYERS / 3 ROUNDS</span>
-      <span>BUILT FOR THE BOLD</span>
+      <span>NO NAMES. JUST MUSIC.</span>
     </footer>
   </div>
 
-  
-<script>
-  const tg = window.Telegram?.WebApp;
+  <script>
+    const tg = window.Telegram?.WebApp;
 
-  if (tg) {
-    tg.ready();
-    tg.expand();
-  }
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
 
-  document.getElementById("create").addEventListener("click", async () => {
-    const playerName = prompt("Как тебя зовут в игре?");
+    const welcomeScreen = document.getElementById("welcomeScreen");
+    const roomScreen = document.getElementById("roomScreen");
+    const welcomeNotice = document.getElementById("welcomeNotice");
+    const roomNotice = document.getElementById("roomNotice");
+    const chairs = document.getElementById("chairs");
 
-    if (!playerName || !playerName.trim()) return;
+    let currentRoom = null;
+    let currentPlayerName = "";
+    let isHost = false;
 
-    try {
-      const response = await fetch("/rooms", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ player_name: playerName.trim() })
+    function setBusy(button, busy) {
+      button.disabled = busy;
+    }
+
+    function showRoom(room, playerName) {
+      currentRoom = room;
+      currentPlayerName = playerName;
+
+      welcomeScreen.classList.add("hidden");
+      roomScreen.classList.remove("hidden");
+
+      document.getElementById("roomCode").textContent = room.room_code;
+      renderPlayers(room);
+      roomNotice.textContent = "";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderPlayers(room) {
+      chairs.innerHTML = "";
+
+      const players = Array.isArray(room.players) ? room.players : [];
+      const maxPlayers = room.max_players || 6;
+
+      isHost = players.some(player => {
+        const name = player.player_name || player.name || player.username || "";
+        return name === currentPlayerName &&
+          (player.is_host === true || player.host === true || player.role === "host");
       });
 
-      const room = await response.json();
-
-      if (!response.ok) {
-        throw new Error(room.detail || "Не удалось создать комнату");
+      // Если сервер не прислал признак ведущего, создатель комнаты — ведущий.
+      if (!players.some(player =>
+        player.is_host === true || player.host === true || player.role === "host"
+      )) {
+        isHost = players.length > 0 &&
+          (players[0].player_name || players[0].name || players[0].username) === currentPlayerName;
       }
 
-      alert(
-        "Комната создана!\n\n" +
-        "Код приглашения: " + room.room_code + "\n" +
-        "Игроков: " + room.players.length + " из " + room.max_players
-      );
-    } catch (error) {
-      alert("Ошибка: " + error.message);
+      for (let i = 0; i < Math.min(maxPlayers, 6); i++) {
+        const player = players[i];
+        const chair = document.createElement("div");
+        chair.className = "chair p" + (i + 1);
+
+        if (player) {
+          const name = player.player_name || player.name || player.username || "Игрок";
+          const host = player.is_host === true || player.host === true ||
+            player.role === "host" || (i === 0 && isHost);
+
+          const avatar = document.createElement("div");
+          avatar.className = "avatar";
+          avatar.textContent = name.trim().charAt(0).toUpperCase() || "♪";
+
+          const playerName = document.createElement("div");
+          playerName.className = "player-name";
+          playerName.textContent = name;
+
+          const role = document.createElement("div");
+          role.className = "player-role";
+          role.textContent = host ? "★ ВЕДУЩИЙ" : "ИГРОК";
+
+          chair.append(avatar, playerName, role);
+        } else {
+          chair.classList.add("empty");
+
+          const avatar = document.createElement("div");
+          avatar.className = "avatar";
+          avatar.textContent = "+";
+
+          const label = document.createElement("div");
+          label.className = "player-name";
+          label.textContent = "Свободно";
+
+          chair.append(avatar, label);
+        }
+
+        chairs.appendChild(chair);
+      }
+
+      document.getElementById("playerCount").innerHTML =
+        'Игроков: <strong>' + players.length + ' / ' + maxPlayers + '</strong>';
+
+      const startButton = document.getElementById("startGame");
+      startButton.disabled = !isHost || players.length < 2;
+      startButton.textContent = isHost ? "НАЧАТЬ ИГРУ" : "ЖДЁМ ВЕДУЩЕГО";
     }
-  });
 
-  document.getElementById("join").addEventListener("click", async () => {
-    const roomCode = prompt("Введи код комнаты");
-    if (!roomCode || !roomCode.trim()) return;
+    async function readResponse(response) {
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.detail || "Ошибка сервера: " + response.status);
+      }
+      return data;
+    }
 
-    const playerName = prompt("Как тебя зовут в игре?");
-    if (!playerName || !playerName.trim()) return;
+    document.getElementById("create").addEventListener("click", async () => {
+      const playerName = prompt("Как тебя зовут в игре?");
+      if (!playerName || !playerName.trim()) return;
 
-    try {
-      const response = await fetch(
-        "/rooms/" + encodeURIComponent(roomCode.trim()) + "/join",
-        {
+      const button = document.getElementById("create");
+      setBusy(button, true);
+      welcomeNotice.textContent = "";
+
+      try {
+        const response = await fetch("/rooms", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ player_name: playerName.trim() })
-        }
-      );
+        });
 
-      const room = await response.json();
-
-      if (!response.ok) {
-        throw new Error(room.detail || "Не удалось войти в комнату");
+        const room = await readResponse(response);
+        showRoom(room, playerName.trim());
+      } catch (error) {
+        welcomeNotice.textContent = "Не удалось создать комнату: " + error.message;
+      } finally {
+        setBusy(button, false);
       }
+    });
 
-      alert(
-        "Ты присоединился к игре!\n\n" +
-        "Код: " + room.room_code + "\n" +
-        "Игроков: " + room.players.length + " из " + room.max_players
-      );
-    } catch (error) {
-      alert("Ошибка: " + error.message);
-    }
-  });
-</script>
+    document.getElementById("join").addEventListener("click", async () => {
+      const roomCode = prompt("Введи код комнаты");
+      if (!roomCode || !roomCode.trim()) return;
 
+      const playerName = prompt("Как тебя зовут в игре?");
+      if (!playerName || !playerName.trim()) return;
+
+      const button = document.getElementById("join");
+      setBusy(button, true);
+      welcomeNotice.textContent = "";
+
+      try {
+        const response = await fetch(
+          "/rooms/" + encodeURIComponent(roomCode.trim()) + "/join",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ player_name: playerName.trim() })
+          }
+        );
+
+        const room = await readResponse(response);
+        showRoom(room, playerName.trim());
+      } catch (error) {
+        welcomeNotice.textContent = "Не удалось войти: " + error.message;
+      } finally {
+        setBusy(button, false);
+      }
+    });
+
+    document.getElementById("copyCode").addEventListener("click", async () => {
+      if (!currentRoom) return;
+
+      try {
+        await navigator.clipboard.writeText(currentRoom.room_code);
+        document.getElementById("copyCode").textContent = "СКОПИРОВАНО ✓";
+      } catch {
+        prompt("Скопируй код комнаты:", currentRoom.room_code);
+      }
+    });
+
+    document.getElementById("refreshRoom").addEventListener("click", async () => {
+      if (!currentRoom) return;
+
+      const button = document.getElementById("refreshRoom");
+      setBusy(button, true);
+      roomNotice.textContent = "";
+
+      try {
+        const response = await fetch(
+          "/rooms/" + encodeURIComponent(currentRoom.room_code)
+        );
+        const room = await readResponse(response);
+        currentRoom = room;
+        renderPlayers(room);
+      } catch (error) {
+        roomNotice.textContent = "Не удалось обновить комнату: " + error.message;
+      } finally {
+        setBusy(button, false);
+      }
+    });
+
+    document.getElementById("startGame").addEventListener("click", () => {
+      roomNotice.textContent =
+        "Комната готова! Запуск игровых раундов подключим следующим этапом.";
+    });
+  </script>
 </body>
 </html>
