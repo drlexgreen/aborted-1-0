@@ -819,6 +819,30 @@
       }
     });
 
+    // Автоматически обновляем список игроков каждые 3 секунды
+    setInterval(async () => {
+      if (!currentRoom || roomScreen.classList.contains("hidden")) {
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          "/rooms/" + encodeURIComponent(currentRoom.room_code)
+        );
+
+        if (!response.ok) return;
+
+        const room = await response.json();
+
+        currentRoom = room;
+        renderPlayers(room);
+      } catch (error) {
+        // Если соединение временно пропало, попробуем снова
+        // при следующем обновлении.
+      }
+    }, 3000);
+
+
     document.getElementById("startGame").addEventListener("click", () => {
       roomNotice.textContent =
         "Комната готова! Запуск игровых раундов подключим следующим этапом.";
