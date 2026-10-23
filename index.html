@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#09080d">
@@ -257,6 +258,9 @@
   </div>
 
   <script>
+    const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand();
     document.getElementById("create").addEventListener("click", () => {
       alert("Скоро здесь будет создание игровой комнаты!");
     });
